@@ -69,8 +69,6 @@ class Board:
                 return False
         return True
             
-
-
     # Takes in coordinates for an attack
     # Checks if the coordinates are valid. If not, returns "indexError"
     # Checks if the coordinates inputted have already been hit. If they are, returns "chooseError"
@@ -133,7 +131,7 @@ class Board:
                         return "indexError"
             case "a":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x - 1, y))
+                    nextX, nextY = self.CoordToBoard((x - i, y))
                     try:
                         if not self.CheckIfFree((nextX, nextY)):
                             return "boatError"
@@ -149,7 +147,7 @@ class Board:
                         return "indexError"
             case "d":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x + 1, y))
+                    nextX, nextY = self.CoordToBoard((x + i, y))
                     try:
                         if not self.Checkq((nextX, nextY)):
                             return "boatError"
@@ -164,7 +162,22 @@ class Board:
         boat = {"name" : f"{number}boat-length{boatType}"}
         match orientation:
             case "w":
-                
+                for i in range(boatType):
+                    nextX, nextY = self.CoordToBoard((x, chr(ord(y) - i)))
+                    boat.update((nextX, nextY) : 1)
+            case "a":
+                for i in range(boatType):
+                    nextX, nextY = self.CoordToBoard((x - i, y))
+                    boat.update((nextX, nextY) : 1)
+            case "s":
+                for i in range(boatType):
+                    nextX, nextY = self.CoordToBoard((x, chr(ord(y) + i)))
+                    boat.update((nextX, nextY) : 1)
+            case "d":
+                for i in range(boatType):
+                    nextX, nextY = self.CoordToBoard((x + i, y))
+                    boat.update((nextX, nextY) : 1)
+            # I think I'm finished??
                 
 
 
