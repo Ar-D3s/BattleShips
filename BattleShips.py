@@ -31,9 +31,9 @@ class Board:
         # Holds the board
         self.__board = [["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
                         ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
-                        ["-", "o", "-", "-", "-", "-", "-", "-", "-", "-"],
-                        ["-", "o", "-", "-", "-", "-", "-", "-", "-", "-"],
-                        ["-", "x", "-", "-", "-", "-", "-", "-", "-", "-"],
+                        ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                        ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+                        ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
                         ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
                         ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
                         ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
@@ -75,6 +75,7 @@ class Board:
     # If nothing was hit, returns false
     # If a tile has hit, returns "hit"
     # If a whole ship is therefore sunk, returns "wholeHit"
+    # The returns are only used to report what has happened, everything is managed in here
     def TakeShot(self, coordinate):
         x, y = self.CoordToBoard(coordinate)
         # Checks valid target
@@ -164,19 +165,19 @@ class Board:
             case "w":
                 for i in range(boatType):
                     nextX, nextY = self.CoordToBoard((x, chr(ord(y) - i)))
-                    boat.update((nextX, nextY) : 1)
+                    boat.update({(nextX, nextY) : 1})
             case "a":
                 for i in range(boatType):
                     nextX, nextY = self.CoordToBoard((x - i, y))
-                    boat.update((nextX, nextY) : 1)
+                    boat.update({(nextX, nextY) : 1})
             case "s":
                 for i in range(boatType):
                     nextX, nextY = self.CoordToBoard((x, chr(ord(y) + i)))
-                    boat.update((nextX, nextY) : 1)
+                    boat.update({(nextX, nextY) : 1})
             case "d":
                 for i in range(boatType):
                     nextX, nextY = self.CoordToBoard((x + i, y))
-                    boat.update((nextX, nextY) : 1)
+                    boat.update({(nextX, nextY) : 1})
             # I think I'm finished??
                 
 
@@ -188,5 +189,4 @@ class Board:
 
 
 board = Board();
-result = board.TakeShot([1, "A"])
 board.DisplayBoard()
