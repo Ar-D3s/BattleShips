@@ -23,7 +23,7 @@
 #   3 4-tile ships : 12 tiles
 # therefore 35 tiles overall
 
-
+# :)
 
 class Board:
     
