@@ -133,7 +133,7 @@ class Board:
                         return "indexError"
             case "a":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x - i, y))
+                    nextX, nextY = self.CoordToBoard((x - i, chr(y)))
                     try:
                         if not self.CheckIfFree((nextX, nextY)):
                             return "boatError"
@@ -149,9 +149,9 @@ class Board:
                         return "indexError"
             case "d":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x + i, y))
+                    nextX, nextY = self.CoordToBoard((x + i, chr(y)))
                     try:
-                        if not self.Checkq((nextX, nextY)):
+                        if not self.CheckIfFree((nextX, nextY)):
                             return "boatError"
                     except IndexError:
                         return "indexError"
@@ -194,6 +194,5 @@ class Board:
 
 
 board = Board();
-print("dfbvd")
 board.PlaceBoat((5, "E"), 3, "d", 0)
 board.DisplayBoard()
