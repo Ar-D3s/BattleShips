@@ -63,7 +63,7 @@ class Board:
     # By this point, all other input has been sanitised so no checking is needed
     # Returns false if tile is occupied, returns true if tile is free
     def CheckIfFree(self, coordinate):
-        x, y = self.CoordToBoard(coordinate)
+        x, y = coordinate[0], coordinate[1]
         for boat in self.__boats:
             if (x, y) in boat.keys():
                 return False
@@ -125,35 +125,31 @@ class Board:
         match orientation:
             case "w":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x, chr(ord(y) - i)))
-                    try:
-                        if not self.CheckIfFree((nextX, nextY)):
-                            return "boatError"
-                    except IndexError:
+                    nextX, nextY = x, y - i
+                    if not self.CheckIfFree((nextX, nextY)):
+                        return "boatError"
+                    if not (0 <= nextX <= 9 and 0 <= nextY <= 9):
                         return "indexError"
             case "a":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x - i, chr(y)))
-                    try:
-                        if not self.CheckIfFree((nextX, nextY)):
-                            return "boatError"
-                    except IndexError:
+                    nextX, nextY = x - i, y
+                    if not self.CheckIfFree((nextX, nextY)):
+                        return "boatError"
+                    if not (0 <= nextX <= 9 and 0 <= nextY <= 9):
                         return "indexError"
             case "s":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x, chr(ord(y) + i)))
-                    try:
-                        if not self.CheckIfFree((nextX, nextY)):
-                            return "boatError"
-                    except IndexError:
+                    nextX, nextY = x, y + 1
+                    if not self.CheckIfFree((nextX, nextY)):
+                        return "boatError"
+                    if not (0 <= nextX <= 9 and 0 <= nextY <= 9):
                         return "indexError"
             case "d":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x + i, chr(y)))
-                    try:
-                        if not self.CheckIfFree((nextX, nextY)):
-                            return "boatError"
-                    except IndexError:
+                    nextX, nextY = x + i, y
+                    if not self.CheckIfFree((nextX, nextY)):
+                        return "boatError"
+                    if not (0 <= nextX <= 9 and 0 <= nextY <= 9):
                         return "indexError"
             case _:
                 return "keyError"
@@ -167,25 +163,27 @@ class Board:
                 for i in range(boatType):
                     # Both logic and render updates. Initially they are seperate, they are each kept relatively seperate. Whilst the logic usually updates the render, this project has a weird case of I
                     # can't be arsed to do that
-                    nextX, nextY = self.CoordToBoard((x, chr(ord(y) - i)))
+                    nextX, nextY = x, ord(chr(y - i))
                     boat.update({(nextX, nextY) : 1})
-                    self.__board[nextX][nextY] = "o"
+                    self.__board[nextY][nextX] = "o"
 
             case "a":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x - i, y))
+                    nextX, nextY = x - i, y
                     boat.update({(nextX, nextY) : 1})
-                    self.__board[nextX][nextY] = "o"
+                    self.__board[nextY][nextX] = "o"
             case "s":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x, chr(ord(y) + i)))
+                    nextX, nextY = x, ord(chr(y + i))
                     boat.update({(nextX, nextY) : 1})
-                    self.__board[nextX][nextY] = "o"
+                    self.__board[nextY][nextX] = "o"
             case "d":
                 for i in range(boatType):
-                    nextX, nextY = self.CoordToBoard((x + i, y))
+                    nextX, nextY = x + i, y
                     boat.update({(nextX, nextY) : 1})
-                    self.__board[nextX][nextY] = "o"
+                    self.__board[nextY][nextX] = "o"
+        self.__boats.append(boat)
+        print(self.__boats)
             # I think I'm finished??
                 
 
@@ -194,5 +192,6 @@ class Board:
 
 
 board = Board();
-board.PlaceBoat((5, "E"), 3, "d", 0)
+board.PlaceBoat((1, "A"), 3, "d", 0)
+board.TakeShot((1, "A"))
 board.DisplayBoard()
