@@ -120,6 +120,7 @@ class Board:
     # Orientation is passed in as: "w" (up), "a" (left), "s" (down), or "d" (right)
     def PlaceBoat(self, coordinate, boatType, orientation, number):
         x, y = self.CoordToBoard(coordinate)
+       
         # This validates both the initial coordinate, the rotation, and whether the boat may overlap another boat
         match orientation:
             case "w":
@@ -164,29 +165,35 @@ class Board:
         match orientation:
             case "w":
                 for i in range(boatType):
+                    # Both logic and render updates. Initially they are seperate, they are each kept relatively seperate. Whilst the logic usually updates the render, this project has a weird case of I
+                    # can't be arsed to do that
                     nextX, nextY = self.CoordToBoard((x, chr(ord(y) - i)))
                     boat.update({(nextX, nextY) : 1})
+                    self.__board[nextX][nextY] = "o"
+
             case "a":
                 for i in range(boatType):
                     nextX, nextY = self.CoordToBoard((x - i, y))
                     boat.update({(nextX, nextY) : 1})
+                    self.__board[nextX][nextY] = "o"
             case "s":
                 for i in range(boatType):
                     nextX, nextY = self.CoordToBoard((x, chr(ord(y) + i)))
                     boat.update({(nextX, nextY) : 1})
+                    self.__board[nextX][nextY] = "o"
             case "d":
                 for i in range(boatType):
                     nextX, nextY = self.CoordToBoard((x + i, y))
                     boat.update({(nextX, nextY) : 1})
+                    self.__board[nextX][nextY] = "o"
             # I think I'm finished??
                 
-
-
-        
 
 
 
 
 
 board = Board();
+print("dfbvd")
+board.PlaceBoat((5, "E"), 3, "d", 0)
 board.DisplayBoard()
