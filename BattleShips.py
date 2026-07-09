@@ -43,7 +43,7 @@ class Board:
         # Holds coordinates already targeted, as tuples
         self.__targetedCoords = set()
 
-        # Holds every boat and the coordinates of said boat - every boat stored in a set, then each boat has a dictionary of 
+        # Holds every boat and the coordinates of said boat - every boat stored in a list, then each boat has a dictionary of 
         # tiles, with bools to show if theyeve been hit or not
         # Coordinates are stord as indexes, NO LETTERS THEY HAVE ALREADY BEEN CONVERTED AT THIS POINT
         self.__boats = []
@@ -110,7 +110,7 @@ class Board:
                 self.board[coordinate[0], coordinate[1]] = "#"
                 return "wholeHit"
  
-    # Takes in an initial coordinate for the start of the boat, the type of boat, and an orientation for the boat
+    # Takes in an initial coordinate for the start of the boat, the type of boat, an orientation for the boat, and a number for the type of boat
     # If the coordinates are invalid/go out of range, return "indexError" /
     # Be careful to make sure that boats do not loop around the screen
     # If the key pressed is wrong, returns "keyError" /
@@ -119,7 +119,7 @@ class Board:
     # Coordinate is passed in as letters & numbers as likely to be higher level
     # Boat Type passed in as integer (1, 2, 3, or 4) to indicate the length of the boat
     # Orientation is passed in as: "w" (up), "a" (left), "s" (down), or "d" (right)
-    def PlaceBoat(self, coordinate, boatType, orientation):
+    def PlaceBoat(self, coordinate, boatType, orientation, number):
         x, y = self.CoordToBoard(coordinate)
         # This validates both the initial coordinate, the rotation, and whether the boat may overlap another boat
         match orientation:
@@ -158,8 +158,14 @@ class Board:
             case _:
                 return "keyError"
         # SANITISATION IS ALL DONE!!
-        
-
+        # Now have to repeat match case as above, except placing - cannot place at same time as check otherwise would have to
+        # go about deleting entries
+        # First finding out how to name the boat
+        boat = {"name" : f"{number}boat-length{boatType}"}
+        match orientation:
+            case "w":
+                
+                
 
 
         
